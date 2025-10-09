@@ -6,7 +6,15 @@
 /*   By: cafabre <camille.fabre003@gmail.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 01:16:20 by cafabre           #+#    #+#             */
-/*   Updated: 2025/10/09 01:16:20 by cafabre          ###   ########.fr       */
+/*   Updated: 2025/10/10 01:43:29 by cafabre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "includes.h"
+
+void	*thread_routine(t_philo *philo)
+{
+	pthread_t	tid;
+
+	tid = pthread_self();
+}

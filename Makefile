@@ -6,7 +6,7 @@
 #    By: cafabre <camille.fabre003@gmail.com>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/09 01:04:32 by cafabre           #+#    #+#              #
-#    Updated: 2025/10/09 01:16:14 by cafabre          ###   ########.fr        #
+#    Updated: 2025/10/10 01:35:15 by cafabre          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ FILES =	main.c\
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -MMD -g3 \
+CFLAGS = -Wall -Wextra -Werror -MMD -g3 -pthread \
 			-I includes
 
 FILE = $(FILES)
@@ -29,7 +29,7 @@ OBJ_DIR = .obj/
 OBJ = $(addprefix $(OBJ_DIR), $(FILE:=.c=.o))
 DEPD = $(addprefix $(OBJ_DIR), $(FILE:.c=.d))
 
-all: banner lib $(NAME)
+all: $(NAME)
 
 $(NAME): $(OBJ)
 		$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
