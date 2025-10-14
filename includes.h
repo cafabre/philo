@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   includes.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cafabre <camille.fabre003@gmail.com>       +#+  +:+       +#+        */
+/*   By: cafabre <cafabre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 01:15:50 by cafabre           #+#    #+#             */
-/*   Updated: 2025/10/10 01:46:31 by cafabre          ###   ########.fr       */
+/*   Updated: 2025/10/14 02:31:26 by cafabre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,28 +21,36 @@
 # include <pthread.h>
 # include <limits.h>
 
+typedef struct s_philo
+{
+	pthread_t	thread;
+	int			id;
+	int			left_fork;
+	int			right_fork;
+	size_t		last_meal_time;
+	int			times_eaten;
+	t_program	*data;
+}	t_philo;
+
+typedef struct s_program
+{
+	int				num_philos;
+	size_t			time_to_die;
+	size_t			time_to_eat;
+	size_t			time_to_sleep;
+	int				must_eat_count;
+	long long		start_time;
+	pthread_mutex_t	*forks;
+	pthread_mutex_t	*print_mutex;
+	pthread_mutex_t	*death_mutex;
+	int				someome_died;
+	t_philo			*philos;
+}	t_program;
+
 size_t	ft_strlen(const char *str);
 
 int		ft_atoi(const char *str);
 
 void	*thread_routine(t_philo *philo);
-
-typedef struct s_philo
-{
-	pthread_t	thread;
-	int			id;
-	size_t		time_to_die;
-	size_t		time_to_eat;
-	size_t		time_to_sleep;
-	size_t		last_meal_time;
-	int			number_of_meals;
-	int			*dead;
-	//mutex
-}	t_philo;
-
-typedef struct s_program
-{
-	//
-}	t_program;
 
 #endif

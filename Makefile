@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cafabre <camille.fabre003@gmail.com>       +#+  +:+       +#+         #
+#    By: cafabre <cafabre@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/09 01:04:32 by cafabre           #+#    #+#              #
-#    Updated: 2025/10/10 01:35:15 by cafabre          ###   ########.fr        #
+#    Updated: 2025/10/14 02:25:10 by cafabre          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ FILE = $(FILES)
 
 OBJ_DIR = .obj/
 
-OBJ = $(addprefix $(OBJ_DIR), $(FILE:=.c=.o))
+OBJ = $(addprefix $(OBJ_DIR), $(FILE:.c=.o))
 DEPD = $(addprefix $(OBJ_DIR), $(FILE:.c=.d))
 
 all: $(NAME)
