@@ -6,28 +6,26 @@
 #    By: cafabre <cafabre@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/09 01:04:32 by cafabre           #+#    #+#              #
-#    Updated: 2025/10/14 02:25:10 by cafabre          ###   ########.fr        #
+#    Updated: 2025/10/17 01:04:10 by cafabre          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 
-INCLUDE = -Iincludes
+INCLUDE = -I includes
 
 FILES =	main.c\
+		philo.c\
 		utils.c
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -MMD -g3 -pthread \
-			-I includes
-
-FILE = $(FILES)
+CFLAGS = -Wall -Wextra -Werror -MMD -g3 -pthread $(INCLUDE)
 
 OBJ_DIR = .obj/
 
-OBJ = $(addprefix $(OBJ_DIR), $(FILE:.c=.o))
-DEPD = $(addprefix $(OBJ_DIR), $(FILE:.c=.d))
+OBJ = $(addprefix $(OBJ_DIR), $(FILES:.c=.o))
+DEPD = $(addprefix $(OBJ_DIR), $(FILES:.c=.d))
 
 all: $(NAME)
 
@@ -36,21 +34,16 @@ $(NAME): $(OBJ)
 		
 $(OBJ_DIR)%.o: %.c Makefile
 	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 	
 -include $(DEPD)
 
-.PHONY: FORCE
-FORCE:
+.PHONY: all clean fclean re
 
 clean:
-	$(MAKE) -C clean
 	rm -rf $(OBJ_DIR)
 
 fclean: clean
-	$(MAKE) -C fclean
 	rm -rf $(NAME)
 	
 re: fclean all
-
-.PHONY: all clean fclean re

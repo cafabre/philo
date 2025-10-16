@@ -6,7 +6,7 @@
 /*   By: cafabre <cafabre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 01:15:50 by cafabre           #+#    #+#             */
-/*   Updated: 2025/10/14 02:31:26 by cafabre          ###   ########.fr       */
+/*   Updated: 2025/10/17 00:15:36 by cafabre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # include <sys/time.h>
 # include <pthread.h>
 # include <limits.h>
+
+typedef struct s_program	t_program;
 
 typedef struct s_philo
 {
@@ -43,7 +45,7 @@ typedef struct s_program
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	*print_mutex;
 	pthread_mutex_t	*death_mutex;
-	int				someome_died;
+	int				someone_died;
 	t_philo			*philos;
 }	t_program;
 
