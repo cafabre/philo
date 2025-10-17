@@ -6,7 +6,7 @@
 /*   By: cafabre <cafabre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 01:15:50 by cafabre           #+#    #+#             */
-/*   Updated: 2025/10/17 04:52:47 by cafabre          ###   ########.fr       */
+/*   Updated: 2025/10/17 06:17:57 by cafabre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,13 @@ int			check_args(char **argv);
 /********** init_philos.c **********/
 void		fill_philosophers_params(t_program *program, char **argv, int argc);
 int			init_philos(t_program *program);
-void		cleanup_philos(t_program *program);
 
 /********** init_prog.c **********/
 int			init_program(t_program *program);
+
+/********** cleanup.c **********/
+void		destroy_print_death(t_program *program);
+void		cleanup_philos(t_program *program);
 void		cleanup_program(t_program *program);
 void		clean_all(t_program *program);
 

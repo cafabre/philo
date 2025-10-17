@@ -6,7 +6,7 @@
 #    By: cafabre <cafabre@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/09 01:04:32 by cafabre           #+#    #+#              #
-#    Updated: 2025/10/17 05:19:02 by cafabre          ###   ########.fr        #
+#    Updated: 2025/10/17 06:18:55 by cafabre          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ FILES =	main.c\
 		src/args.c\
 		src/init_philos.c\
 		src/init_prog.c\
+		src/cleanup.c\
 		src/threads.c\
 		src/monitor.c\
 

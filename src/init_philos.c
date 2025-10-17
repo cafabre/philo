@@ -6,7 +6,7 @@
 /*   By: cafabre <cafabre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 02:05:13 by cafabre           #+#    #+#             */
-/*   Updated: 2025/10/17 05:17:05 by cafabre          ###   ########.fr       */
+/*   Updated: 2025/10/17 06:16:03 by cafabre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,16 @@ void	fill_philosophers_params(t_program *program, char **argv, int argc)
 	program->must_eat_count = -1;
 	if (argc == 6)
 		program->must_eat_count = ft_atoi(argv[5]);
+}
+
+static void	init_philos_data(t_program *program, int i)
+{
+	program->philos[i].id = i + 1;
+	program->philos[i].left_fork = i;
+	program->philos[i].right_fork = (i + 1) % program->num_philos;
+	program->philos[i].times_eaten = 0;
+	program->philos[i].last_meal_time = program->start_time;
+	program->philos[i].data = program;
 }
 
 int	init_philos(t_program *program)
@@ -48,29 +58,8 @@ int	init_philos(t_program *program)
 			free(program->philos);
 			return (1);
 		}
-		philos[i].id = i + 1;
-		philos[i].left_fork = i;
-		philos[i].right_fork = (i + 1) % program->num_philos;
-		philos[i].times_eaten = 0;
-		philos[i].last_meal_time = program->start_time;
-		philos[i].data = program;
+		init_philos_data(program, i);
 		i++;
 	}
 	return (0);
-}
-
-void	cleanup_philos(t_program *program)
-{
-	int	i;
-
-	if (!program || !program->philos)
-		return ;
-	i = 0;
-	while (i < program->num_philos)
-	{
-		pthread_mutex_destroy(&program->philos[i].meal_mutex);
-		i++;
-	}
-	free(program->philos);
-	program->philos = NULL;
 }
