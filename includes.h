@@ -6,7 +6,7 @@
 /*   By: cafabre <cafabre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 01:15:50 by cafabre           #+#    #+#             */
-/*   Updated: 2025/10/17 00:15:36 by cafabre          ###   ########.fr       */
+/*   Updated: 2025/10/17 02:11:16 by cafabre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,29 @@ typedef struct s_program
 	t_philo			*philos;
 }	t_program;
 
-size_t	ft_strlen(const char *str);
+/********** utils.c **********/
+size_t		ft_strlen(const char *str);
+int			ft_atoi(const char *str);
 
-int		ft_atoi(const char *str);
+/********** philo.c **********/
+void		*thread_routine(t_philo *philo);
 
-void	*thread_routine(t_philo *philo);
+/********** args.c **********/
+int			check_args(char **argv);
+
+/********** init.c **********/
+int			init_program(t_program *program);
+int			init_philos(t_program *program);
+void		cleanup_program(t_program *program);
+
+/********** monitor.c **********/
+long long	current_time_ms(void);
+int			all_ate_enough(t_program *p);
+void		monitor_loop(t_program *program);
+
+/********** threads.c **********/
+void		*thread_start(void *arg);
+int			create_threads(pthread_t **tid_out, t_program *program);
+void		join_threads(pthread_t *tid, t_program *program);
 
 #endif
