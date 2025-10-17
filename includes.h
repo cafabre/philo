@@ -6,7 +6,7 @@
 /*   By: cafabre <cafabre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 01:15:50 by cafabre           #+#    #+#             */
-/*   Updated: 2025/10/17 06:58:10 by cafabre          ###   ########.fr       */
+/*   Updated: 2025/10/17 08:48:11 by cafabre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,10 @@ typedef struct s_program
 /********** utils.c **********/
 size_t		ft_strlen(const char *str);
 int			ft_atoi(const char *str);
+
+/********** eating.c **********/
+int			eating_routine(t_philo *philo, t_program *program,
+				int *left_fork, int *right_fork);
 
 /********** philo.c **********/
 void		*thread_routine(t_philo *philo);

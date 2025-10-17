@@ -6,7 +6,7 @@
 #    By: cafabre <cafabre@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/09 01:04:32 by cafabre           #+#    #+#              #
-#    Updated: 2025/10/17 06:18:55 by cafabre          ###   ########.fr        #
+#    Updated: 2025/10/17 08:46:59 by cafabre          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,8 +15,9 @@ NAME = philo
 INCLUDE = -I includes
 
 FILES =	main.c\
-		philo.c\
 		utils.c\
+		routine/eating.c\
+		routine/philo.c\
 		src/args.c\
 		src/init_philos.c\
 		src/init_prog.c\
