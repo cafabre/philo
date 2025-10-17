@@ -6,7 +6,7 @@
 /*   By: cafabre <cafabre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 02:06:28 by cafabre           #+#    #+#             */
-/*   Updated: 2025/10/17 02:07:57 by cafabre          ###   ########.fr       */
+/*   Updated: 2025/10/17 02:16:50 by cafabre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	*thread_start(void *arg)
 	return (thread_routine((t_philo *)arg));
 }
 
-int create_threads(pthread_t **tid_out, t_program *program)
+int	create_threads(pthread_t **tid_out, t_program *program)
 {
 	pthread_t	*tid;
 	int			i;

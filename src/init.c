@@ -6,7 +6,7 @@
 /*   By: cafabre <cafabre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 02:05:13 by cafabre           #+#    #+#             */
-/*   Updated: 2025/10/17 02:06:10 by cafabre          ###   ########.fr       */
+/*   Updated: 2025/10/17 02:15:30 by cafabre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,7 @@ void	cleanup_program(t_program *program)
 	{
 		i = 0;
 		while (i < program->num_philos)
-		{
-			pthread_mutex_destroy(&program->forks[i]);
-			i++;
-		}
+			pthread_mutex_destroy(&program->forks[i++]);
 		free(program->forks);
 		program->forks = NULL;
 	}

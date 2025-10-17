@@ -6,7 +6,7 @@
 /*   By: cafabre <cafabre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 02:07:03 by cafabre           #+#    #+#             */
-/*   Updated: 2025/10/17 02:08:12 by cafabre          ###   ########.fr       */
+/*   Updated: 2025/10/17 02:24:04 by cafabre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,20 @@ int	all_ate_enough(t_program *p)
 	return (1);
 }
 
-void monitor_loop(t_program *program)
+static void	handle_death(t_program *program, int i, long long now)
+{
+	pthread_mutex_lock(program->print_mutex);
+	printf("%lld %d died\n", now - program->start_time, program->philos[i].id);
+	pthread_mutex_unlock(program->print_mutex);
+	pthread_mutex_lock(program->death_mutex);
+	program->someone_died = 1;
+	pthread_mutex_unlock(program->death_mutex);
+}
+
+void	monitor_loop(t_program *program)
 {
 	int			i;
 	long long	now;
-	long long	last;
 
 	while (1)
 	{
@@ -48,16 +57,10 @@ void monitor_loop(t_program *program)
 		while (i < program->num_philos)
 		{
 			now = current_time_ms();
-			last = program->philos[i].last_meal_time;
-			if (now - last > (long long)program->time_to_die)
+			if (now - program->philos[i].last_meal_time
+				> (long long)program->time_to_die)
 			{
-				pthread_mutex_lock(program->print_mutex);
-				printf("%lld %d died\n", now - program->start_time,
-					program->philos[i].id);
-				pthread_mutex_unlock(program->print_mutex);
-				pthread_mutex_lock(program->death_mutex);
-				program->someone_died = 1;
-				pthread_mutex_unlock(program->death_mutex);
+				handle_death(program, i, now);
 				return ;
 			}
 			i++;
