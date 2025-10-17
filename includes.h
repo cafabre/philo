@@ -6,7 +6,7 @@
 /*   By: cafabre <cafabre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 01:15:50 by cafabre           #+#    #+#             */
-/*   Updated: 2025/10/17 02:21:04 by cafabre          ###   ########.fr       */
+/*   Updated: 2025/10/17 04:52:47 by cafabre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,21 +25,22 @@ typedef struct s_program	t_program;
 
 typedef struct s_philo
 {
-	pthread_t	thread;
-	int			id;
-	int			left_fork;
-	int			right_fork;
-	size_t		last_meal_time;
-	int			times_eaten;
-	t_program	*data;
+	pthread_t		thread;
+	pthread_mutex_t	meal_mutex;
+	int				id;
+	int				left_fork;
+	int				right_fork;
+	long long		last_meal_time;
+	int				times_eaten;
+	t_program		*data;
 }	t_philo;
 
 typedef struct s_program
 {
 	int				num_philos;
-	size_t			time_to_die;
-	size_t			time_to_eat;
-	size_t			time_to_sleep;
+	long long		time_to_die;
+	long long		time_to_eat;
+	long long		time_to_sleep;
 	int				must_eat_count;
 	long long		start_time;
 	pthread_mutex_t	*forks;
@@ -59,10 +60,15 @@ void		*thread_routine(t_philo *philo);
 /********** args.c **********/
 int			check_args(char **argv);
 
-/********** init.c **********/
-int			init_program(t_program *program);
+/********** init_philos.c **********/
+void		fill_philosophers_params(t_program *program, char **argv, int argc);
 int			init_philos(t_program *program);
+void		cleanup_philos(t_program *program);
+
+/********** init_prog.c **********/
+int			init_program(t_program *program);
 void		cleanup_program(t_program *program);
+void		clean_all(t_program *program);
 
 /********** monitor.c **********/
 long long	current_time_ms(void);
@@ -72,6 +78,7 @@ void		monitor_loop(t_program *program);
 /********** threads.c **********/
 void		*thread_start(void *arg);
 int			create_threads(pthread_t **tid_out, t_program *program);
-void		join_threads(pthread_t *tid, t_program *program);
+void		join_threads(pthread_t *tid, t_program *program,
+				int threads_created);
 
 #endif

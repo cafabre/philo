@@ -6,11 +6,11 @@
 /*   By: cafabre <cafabre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 02:04:53 by cafabre           #+#    #+#             */
-/*   Updated: 2025/10/17 02:05:02 by cafabre          ###   ########.fr       */
+/*   Updated: 2025/10/17 02:30:22 by cafabre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes.h"
+#include "../includes.h"
 
 int	check_args(char **argv)
 {

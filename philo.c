@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cafabre <camille.fabre003@gmail.com>       +#+  +:+       +#+        */
+/*   By: cafabre <cafabre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 01:16:20 by cafabre           #+#    #+#             */
-/*   Updated: 2025/10/10 01:43:29 by cafabre          ###   ########.fr       */
+/*   Updated: 2025/10/17 04:13:03 by cafabre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	*thread_routine(t_philo *philo)
 {
-	pthread_t	tid;
-
-	tid = pthread_self();
+	(void)philo;
+	return (NULL);
 }
