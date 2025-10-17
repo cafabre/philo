@@ -6,7 +6,7 @@
 /*   By: cafabre <cafabre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 01:16:20 by cafabre           #+#    #+#             */
-/*   Updated: 2025/10/17 08:49:22 by cafabre          ###   ########.fr       */
+/*   Updated: 2025/10/17 09:20:18 by cafabre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,12 @@ void	*thread_routine(t_philo *philo)
 	if (philo == NULL)
 		return (NULL);
 	program = philo->data;
+	if ((philo->id % 2) == 0)
+		sleep_ms(program, 1);
 	if (program->num_philos == 1)
 		return (handle_one_philo(philo, program));
 	while (1)
 	{
-		//1 : verifier si un philosophe est mort
 		pthread_mutex_lock(program->death_mutex);
 		if (program->someone_died)
 		{
@@ -63,18 +64,12 @@ void	*thread_routine(t_philo *philo)
 			break ;
 		}
 		pthread_mutex_unlock(program->death_mutex);
-		//2 : think
 		thinking(philo, program);
-		//3 : take forks (ordre fixe)
-		//4 : eat
-		//5 : put down forks (inverse ordre)
 		times_eaten = eating_routine(philo, program,
 				&left_fork, &right_fork);
-		//6 : si must_eat_count definit et atteint, break
 		if (program->must_eat_count > 0 && times_eaten
 			>= program->must_eat_count)
 			break ;
-		//7 : dormir
 		sleeping(philo, program);
 	}
 	return (NULL);

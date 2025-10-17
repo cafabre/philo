@@ -6,7 +6,7 @@
 /*   By: cafabre <cafabre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 02:07:03 by cafabre           #+#    #+#             */
-/*   Updated: 2025/10/17 04:32:04 by cafabre          ###   ########.fr       */
+/*   Updated: 2025/10/17 09:08:59 by cafabre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,16 +45,20 @@ void	sleep_ms(t_program *program, long long ms)
 	}
 }
 
-int	all_ate_enough(t_program *p)
+int	all_ate_enough(t_program *program)
 {
 	int	i;
+	int	times_eaten;
 
-	if (p->must_eat_count <= 0)
+	if (program->must_eat_count <= 0)
 		return (0);
 	i = 0;
-	while (i < p->num_philos)
+	while (i < program->num_philos)
 	{
-		if (p->philos[i].times_eaten < p->must_eat_count)
+		pthread_mutex_lock(&program->philos[i].meal_mutex);
+		times_eaten = program->philos[i].times_eaten;
+		pthread_mutex_unlock(&program->philos[i].meal_mutex);
+		if (times_eaten < program->must_eat_count)
 			return (0);
 		i++;
 	}

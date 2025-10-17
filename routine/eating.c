@@ -6,7 +6,7 @@
 /*   By: cafabre <cafabre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 08:36:19 by cafabre           #+#    #+#             */
-/*   Updated: 2025/10/17 08:49:08 by cafabre          ###   ########.fr       */
+/*   Updated: 2025/10/17 09:03:20 by cafabre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	taking_forks(t_philo *philo, t_program *program,
 {
 	*left_fork = philo->left_fork;
 	*right_fork = philo->right_fork;
-	if (left_fork < right_fork)
+	if (*left_fork < *right_fork)
 	{
 		pthread_mutex_lock(&program->forks[*left_fork]);
 		pthread_mutex_lock(&program->forks[*right_fork]);
@@ -29,9 +29,8 @@ static void	taking_forks(t_philo *philo, t_program *program,
 	}
 }
 
-static void	announce_fork_taken(t_philo *philo, t_program *program, int *fork)
+static void	announce_fork_taken(t_philo *philo, t_program *program)
 {
-	pthread_mutex_lock(&program->forks[*fork]);
 	pthread_mutex_lock(program->print_mutex);
 	printf("%lld %d has taken a fork\n",
 		current_time_ms() - program->start_time, philo->id);
@@ -58,8 +57,8 @@ int	eating_routine(t_philo *philo, t_program *program,
 	int	times_eaten;
 
 	taking_forks(philo, program, left_fork, right_fork);
-	announce_fork_taken(philo, program, left_fork);
-	announce_fork_taken(philo, program, right_fork);
+	announce_fork_taken(philo, program);
+	announce_fork_taken(philo, program);
 	eating(philo, program);
 	times_eaten = philo->times_eaten;
 	pthread_mutex_unlock(&philo->meal_mutex);
