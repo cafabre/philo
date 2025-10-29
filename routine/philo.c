@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cafabre <cafabre@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cafabre <camille.fabre003@gmail.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 01:16:20 by cafabre           #+#    #+#             */
-/*   Updated: 2025/10/17 09:20:18 by cafabre          ###   ########.fr       */
+/*   Updated: 2025/10/29 17:38:59 by cafabre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,13 @@
 
 void	thinking(t_philo *philo, t_program *program)
 {
+	pthread_mutex_lock(program->death_mutex);
+	if (program->someone_died)
+	{
+		pthread_mutex_unlock(program->death_mutex);
+		return ;
+	}
+	pthread_mutex_unlock(program->death_mutex);
 	pthread_mutex_lock(program->print_mutex);
 	printf("%lld %d is thinking\n",
 		current_time_ms() - program->start_time, philo->id);
@@ -22,6 +29,13 @@ void	thinking(t_philo *philo, t_program *program)
 
 void	sleeping(t_philo *philo, t_program *program)
 {
+	pthread_mutex_lock(program->death_mutex);
+	if (program->someone_died)
+	{
+		pthread_mutex_unlock(program->death_mutex);
+		return ;
+	}
+	pthread_mutex_unlock(program->death_mutex);
 	pthread_mutex_lock(program->print_mutex);
 	printf("%lld %d is sleeping\n",
 		current_time_ms() - program->start_time, philo->id);
@@ -41,6 +55,18 @@ void	*handle_one_philo(t_philo *philo, t_program *program)
 	return (NULL);
 }
 
+static int	check_death(t_program *program)
+{
+	pthread_mutex_lock(program->death_mutex);
+	if (program->someone_died)
+	{
+		pthread_mutex_unlock(program->death_mutex);
+		return (1);
+	}
+	pthread_mutex_unlock(program->death_mutex);
+	return (0);
+}
+
 void	*thread_routine(t_philo *philo)
 {
 	t_program	*program;
@@ -51,26 +77,20 @@ void	*thread_routine(t_philo *philo)
 	if (philo == NULL)
 		return (NULL);
 	program = philo->data;
-	if ((philo->id % 2) == 0)
-		sleep_ms(program, 1);
 	if (program->num_philos == 1)
 		return (handle_one_philo(philo, program));
+	if (philo->id % 2 == 0)
+		usleep(program->time_to_eat * 1000);
 	while (1)
 	{
-		pthread_mutex_lock(program->death_mutex);
-		if (program->someone_died)
-		{
-			pthread_mutex_unlock(program->death_mutex);
+		if (check_death(program))
 			break ;
-		}
-		pthread_mutex_unlock(program->death_mutex);
-		thinking(philo, program);
-		times_eaten = eating_routine(philo, program,
-				&left_fork, &right_fork);
+		times_eaten = eating_routine(philo, program, &left_fork, &right_fork);
 		if (program->must_eat_count > 0 && times_eaten
 			>= program->must_eat_count)
 			break ;
 		sleeping(philo, program);
+		thinking(philo, program);
 	}
 	return (NULL);
 }

@@ -29,16 +29,31 @@ static void	taking_forks(t_philo *philo, t_program *program,
 	}
 }
 
-static void	announce_fork_taken(t_philo *philo, t_program *program)
+static int	announce_fork_taken(t_philo *philo, t_program *program)
 {
+	pthread_mutex_lock(program->death_mutex);
+	if (program->someone_died)
+	{
+		pthread_mutex_unlock(program->death_mutex);
+		return (1);
+	}
+	pthread_mutex_unlock(program->death_mutex);
 	pthread_mutex_lock(program->print_mutex);
 	printf("%lld %d has taken a fork\n",
 		current_time_ms() - program->start_time, philo->id);
 	pthread_mutex_unlock(program->print_mutex);
+	return (0);
 }
 
-static void	eating(t_philo *philo, t_program *program)
+static int	eating(t_philo *philo, t_program *program)
 {
+	pthread_mutex_lock(program->death_mutex);
+	if (program->someone_died)
+	{
+		pthread_mutex_unlock(program->death_mutex);
+		return (1);
+	}
+	pthread_mutex_unlock(program->death_mutex);
 	pthread_mutex_lock(&philo->meal_mutex);
 	philo->last_meal_time = current_time_ms();
 	pthread_mutex_unlock(&philo->meal_mutex);
@@ -49,6 +64,14 @@ static void	eating(t_philo *philo, t_program *program)
 	sleep_ms(program, program->time_to_eat);
 	pthread_mutex_lock(&philo->meal_mutex);
 	philo->times_eaten += 1;
+	pthread_mutex_unlock(&philo->meal_mutex);
+	return (0);
+}
+
+static void	release_forks(t_program *program, int left, int right)
+{
+	pthread_mutex_unlock(&program->forks[right]);
+	pthread_mutex_unlock(&program->forks[left]);
 }
 
 int	eating_routine(t_philo *philo, t_program *program,
@@ -57,12 +80,15 @@ int	eating_routine(t_philo *philo, t_program *program,
 	int	times_eaten;
 
 	taking_forks(philo, program, left_fork, right_fork);
-	announce_fork_taken(philo, program);
-	announce_fork_taken(philo, program);
-	eating(philo, program);
+	if (announce_fork_taken(philo, program))
+		return (release_forks(program, *left_fork, *right_fork), -1);
+	if (announce_fork_taken(philo, program))
+		return (release_forks(program, *left_fork, *right_fork), -1);
+	if (eating(philo, program))
+		return (release_forks(program, *left_fork, *right_fork), -1);
+	pthread_mutex_lock(&philo->meal_mutex);
 	times_eaten = philo->times_eaten;
 	pthread_mutex_unlock(&philo->meal_mutex);
-	pthread_mutex_unlock(&program->forks[*right_fork]);
-	pthread_mutex_unlock(&program->forks[*left_fork]);
+	release_forks(program, *left_fork, *right_fork);
 	return (times_eaten);
 }

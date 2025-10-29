@@ -23,6 +23,7 @@ FILES =	main.c\
 		src/cleanup.c\
 		src/threads.c\
 		src/monitor.c\
+		src/time_utils.c\
 		src/utils.c
 
 CC = cc

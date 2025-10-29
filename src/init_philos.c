@@ -29,8 +29,16 @@ void	fill_philosophers_params(t_program *program, char **argv, int argc)
 static void	init_philos_data(t_program *program, int i)
 {
 	program->philos[i].id = i + 1;
-	program->philos[i].left_fork = i;
-	program->philos[i].right_fork = (i + 1) % program->num_philos;
+	if (i == program->num_philos - 1)
+	{
+		program->philos[i].left_fork = (i + 1) % program->num_philos;
+		program->philos[i].right_fork = i;
+	}
+	else
+	{
+		program->philos[i].left_fork = i;
+		program->philos[i].right_fork = (i + 1) % program->num_philos;
+	}
 	program->philos[i].times_eaten = 0;
 	program->philos[i].last_meal_time = program->start_time;
 	program->philos[i].data = program;
@@ -40,9 +48,7 @@ int	init_philos(t_program *program)
 {
 	int			i;
 	int			j;
-	t_philo		*philos;
 
-	philos = NULL;
 	program->philos = malloc(sizeof(t_philo) * program->num_philos);
 	if (!program->philos)
 		return (1);

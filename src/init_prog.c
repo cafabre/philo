@@ -70,7 +70,7 @@ static int	init_forks(t_program *program)
 		ret = pthread_mutex_init(&program->forks[i], NULL);
 		if (ret != 0)
 		{
-			while (--i > 0)
+			while (--i >= 0)
 				pthread_mutex_destroy(&program->forks[i]);
 			free(program->forks);
 			program->forks = NULL;
