@@ -6,7 +6,7 @@
 #    By: cafabre <cafabre@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/09 01:04:32 by cafabre           #+#    #+#              #
-#    Updated: 2025/10/17 08:57:20 by cafabre          ###   ########.fr        #
+#    Updated: 2025/11/17 14:46:06 by cafabre          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,11 +24,12 @@ FILES =	main.c\
 		src/threads.c\
 		src/monitor.c\
 		src/time_utils.c\
-		src/utils.c
+		utils/utils.c\
+		utils/print_utils.c\
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -MMD -g3 -pthread $(INCLUDE)
+CFLAGS = -Wall -Wextra -Werror -MMD -g3 -pthread -fsanitize=thread $(INCLUDE)
 
 OBJ_DIR = .obj/
 

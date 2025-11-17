@@ -6,7 +6,7 @@
 /*   By: cafabre <cafabre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 02:06:28 by cafabre           #+#    #+#             */
-/*   Updated: 2025/10/17 04:28:48 by cafabre          ###   ########.fr       */
+/*   Updated: 2025/10/20 17:42:27 by cafabre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,10 @@ int	create_threads(pthread_t **tid_out, t_program *program)
 			program->someone_died = 1;
 			break ;
 		}
-		usleep(1000);
 		i++;
 	}
+	// programme start time, commence ici programme->starttime = current ime ms;
+	//program->start_time = current_time_ms(); 
 	*tid_out = tid;
 	return (i);
 }

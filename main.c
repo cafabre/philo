@@ -6,7 +6,7 @@
 /*   By: cafabre <cafabre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 23:59:02 by cafabre           #+#    #+#             */
-/*   Updated: 2025/10/17 06:31:05 by cafabre          ###   ########.fr       */
+/*   Updated: 2025/11/17 14:13:50 by cafabre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,10 @@ int	main(int argc, char **argv)
 	pthread_t		*tid;
 	t_program		*program;
 	int				threads_created;
+	int				i;
 
 	tid = NULL;
+	i = 0;
 	if (!check_args(argv) || (argc != 5 && argc != 6))
 	{
 		printf("Error: invalid arguments\n");
@@ -41,9 +43,18 @@ int	main(int argc, char **argv)
 	fill_philosophers_params(program, argv, argc);
 	if (init_program(program) != 0 || init_philos(program) != 0)
 		return (print_error(program, "initialization failed"));
+	program->start_time = current_time_ms();
 	threads_created = create_threads(&tid, program);
 	if (threads_created < 0)
 		return (print_error(program, "thread creation failed"));
+	
+	while (i < program->num_philos)
+	{
+		pthread_mutex_lock(&program->philos[i].meal_mutex);
+		program->philos[i].last_meal_time = program->start_time;
+		pthread_mutex_unlock(&program->philos[i].meal_mutex);
+		i++;
+	}
 	monitor_loop(program);
 	join_threads(tid, program, threads_created);
 	free(tid);

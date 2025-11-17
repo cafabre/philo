@@ -6,7 +6,7 @@
 /*   By: cafabre <cafabre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 01:15:50 by cafabre           #+#    #+#             */
-/*   Updated: 2025/10/17 08:48:11 by cafabre          ###   ########.fr       */
+/*   Updated: 2025/10/18 03:40:17 by cafabre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,9 @@ long long	current_time_ms(void);
 void		sleep_ms(t_program *program, long long ms);
 int			all_ate_enough(t_program *p);
 void		monitor_loop(t_program *program);
+
+/********** print_utils.c **********/
+void		safe_print(t_program *program, int id, const char *msg);
 
 /********** threads.c **********/
 void		*thread_start(void *arg);
