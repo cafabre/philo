@@ -6,7 +6,7 @@
 /*   By: cafabre <cafabre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 01:16:20 by cafabre           #+#    #+#             */
-/*   Updated: 2025/11/27 16:47:17 by cafabre          ###   ########.fr       */
+/*   Updated: 2025/12/02 14:02:44 by cafabre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,6 @@ void	*handle_one_philo(t_philo *philo, t_program *program)
 void	*thread_routine(t_philo *philo)
 {
 	t_program	*program;
-	int			left_fork;
-	int			right_fork;
-	int			times_eaten;
 
 	if (philo == NULL)
 		return (NULL);
@@ -68,17 +65,12 @@ void	*thread_routine(t_philo *philo)
 		return (handle_one_philo(philo, program));
 	while (1)
 	{
-		pthread_mutex_lock(program->death_mutex);
-		if (program->someone_died)
-		{
-			pthread_mutex_unlock(program->death_mutex);
+		if (check_death(program) == 1)
 			break ;
-		}
-		pthread_mutex_unlock(program->death_mutex);
 		thinking(philo, program);
-		times_eaten = eating_routine(philo, program,
-				&left_fork, &right_fork);
-		if (program->must_eat_count > 0 && times_eaten
+		philo->times_eaten = eating_routine(philo, program,
+				&philo->left_fork, &philo->right_fork);
+		if (program->must_eat_count > 0 && philo->times_eaten
 			>= program->must_eat_count)
 			break ;
 		sleeping(philo, program);

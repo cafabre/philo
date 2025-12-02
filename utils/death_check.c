@@ -1,26 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_utils.c                                      :+:      :+:    :+:   */
+/*   death_check.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cafabre <cafabre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/18 03:41:02 by cafabre           #+#    #+#             */
-/*   Updated: 2025/12/02 13:57:24 by cafabre          ###   ########.fr       */
+/*   Created: 2025/12/02 13:54:58 by cafabre           #+#    #+#             */
+/*   Updated: 2025/12/02 14:37:48 by cafabre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes.h"
-#include <stdio.h>
 
-void	safe_print(t_program *program, int id, const char *msg)
+int	check_death(t_program *program)
 {
-	if (!program || !msg)
-		return ;
-	if (check_death(program) == 1)
-		return ;
-	pthread_mutex_lock(program->print_mutex);
-	printf("%lld %d %s\n", current_time_ms()
-		- program->start_time, id, msg);
-	pthread_mutex_unlock(program->print_mutex);
+	pthread_mutex_lock(program->death_mutex);
+	if (program->someone_died)
+	{
+		pthread_mutex_unlock(program->death_mutex);
+		return (1);
+	}
+	pthread_mutex_unlock(program->death_mutex);
+	return (0);
 }

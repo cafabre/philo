@@ -6,7 +6,7 @@
 /*   By: cafabre <cafabre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 02:07:03 by cafabre           #+#    #+#             */
-/*   Updated: 2025/10/17 09:08:59 by cafabre          ###   ########.fr       */
+/*   Updated: 2025/12/02 13:56:57 by cafabre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,8 @@ void	sleep_ms(t_program *program, long long ms)
 	start = current_time_ms();
 	while (1)
 	{
-		pthread_mutex_lock(program->death_mutex);
-		if (program->someone_died)
-		{
-			pthread_mutex_unlock(program->death_mutex);
+		if (check_death(program) == 1)
 			break ;
-		}
-		pthread_mutex_unlock(program->death_mutex);
 		now = current_time_ms();
 		if (now - start >= ms)
 			break ;
@@ -72,7 +67,7 @@ static void	handle_death(t_program *program, int i, long long now)
 	if (program->someone_died)
 	{
 		pthread_mutex_unlock(program->death_mutex);
-		return;
+		return ;
 	}
 	pthread_mutex_unlock(program->death_mutex);
 	pthread_mutex_lock(program->print_mutex);

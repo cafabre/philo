@@ -6,7 +6,7 @@
 /*   By: cafabre <cafabre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 23:59:02 by cafabre           #+#    #+#             */
-/*   Updated: 2025/11/26 13:36:44 by cafabre          ###   ########.fr       */
+/*   Updated: 2025/12/02 13:38:26 by cafabre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,3 @@ int	main(int argc, char **argv)
 	clean_all(program);
 	return (0);
 }
-
-
-//TEST
-//quand un philo die -> continue d afficher quelques lignes avant de terminer
-//quand il y a trop de philos -> mort prematuree
-//timestamps parfois dans le desordre si beaucoup de philos
-//		-> proteger tous les prints avec un seul mutex

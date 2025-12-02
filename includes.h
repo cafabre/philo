@@ -6,7 +6,7 @@
 /*   By: cafabre <cafabre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 01:15:50 by cafabre           #+#    #+#             */
-/*   Updated: 2025/10/17 08:48:11 by cafabre          ###   ########.fr       */
+/*   Updated: 2025/12/02 13:58:33 by cafabre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,12 @@ void		monitor_loop(t_program *program);
 void		*thread_start(void *arg);
 int			create_threads(pthread_t **tid_out, t_program *program);
 void		join_threads(pthread_t *tid, t_program *program,
-int threads_created);
+				int threads_created);
 
-void	safe_print(t_program *program,  int id, const char *msg);
+/********** print_utils.c **********/
+void		safe_print(t_program *program, int id, const char *msg);
+
+/********** check_death.c.c **********/
+int			check_death(t_program *program);
 
 #endif

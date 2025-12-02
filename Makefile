@@ -6,7 +6,7 @@
 #    By: cafabre <cafabre@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/09 01:04:32 by cafabre           #+#    #+#              #
-#    Updated: 2025/10/17 08:57:20 by cafabre          ###   ########.fr        #
+#    Updated: 2025/12/02 14:01:46 by cafabre          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,8 +23,9 @@ FILES =	main.c\
 		src/cleanup.c\
 		src/threads.c\
 		src/monitor.c\
-		src/utils.c\
-		utils/print_utils.c
+		utils/death_check.c\
+		utils/print_utils.c\
+		utils/utils.c\
 
 CC = cc
 
