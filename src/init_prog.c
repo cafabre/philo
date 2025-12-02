@@ -6,7 +6,7 @@
 /*   By: cafabre <cafabre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 04:40:09 by cafabre           #+#    #+#             */
-/*   Updated: 2025/10/21 11:30:35 by cafabre          ###   ########.fr       */
+/*   Updated: 2025/10/17 06:17:02 by cafabre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static int	init_forks(t_program *program)
 		ret = pthread_mutex_init(&program->forks[i], NULL);
 		if (ret != 0)
 		{
-			while (--i >= 0)
+			while (--i > 0)
 				pthread_mutex_destroy(&program->forks[i]);
 			free(program->forks);
 			program->forks = NULL;
@@ -83,6 +83,7 @@ static int	init_forks(t_program *program)
 
 int	init_program(t_program *program)
 {
+	program->start_time = current_time_ms();
 	program->someone_died = 0;
 	if (alloc_print_death(program) != 0)
 		return (1);
@@ -96,6 +97,5 @@ int	init_program(t_program *program)
 		destroy_print_death(program);
 		return (1);
 	}
-	//program->start_time = current_time_ms();
 	return (0);
 }
