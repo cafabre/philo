@@ -67,8 +67,17 @@ int	all_ate_enough(t_program *program)
 
 static void	handle_death(t_program *program, int i, long long now)
 {
+	(void)now;
+	pthread_mutex_lock(program->death_mutex);
+	if (program->someone_died)
+	{
+		pthread_mutex_unlock(program->death_mutex);
+		return;
+	}
+	pthread_mutex_unlock(program->death_mutex);
 	pthread_mutex_lock(program->print_mutex);
-	printf("%lld %d died\n", now - program->start_time, program->philos[i].id);
+	printf("%lld %d %s\n", current_time_ms()
+		- program->start_time, program->philos[i].id, "died");
 	pthread_mutex_unlock(program->print_mutex);
 	pthread_mutex_lock(program->death_mutex);
 	program->someone_died = 1;

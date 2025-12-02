@@ -87,6 +87,8 @@ void		monitor_loop(t_program *program);
 void		*thread_start(void *arg);
 int			create_threads(pthread_t **tid_out, t_program *program);
 void		join_threads(pthread_t *tid, t_program *program,
-				int threads_created);
+int threads_created);
+
+void	safe_print(t_program *program,  int id, const char *msg);
 
 #endif

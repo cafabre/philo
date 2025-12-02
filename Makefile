@@ -23,7 +23,8 @@ FILES =	main.c\
 		src/cleanup.c\
 		src/threads.c\
 		src/monitor.c\
-		src/utils.c
+		src/utils.c\
+		utils/print_utils.c
 
 CC = cc
 

@@ -38,7 +38,6 @@ int	create_threads(pthread_t **tid_out, t_program *program)
 			program->someone_died = 1;
 			break ;
 		}
-		usleep(1000);
 		i++;
 	}
 	*tid_out = tid;

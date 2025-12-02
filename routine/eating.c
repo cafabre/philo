@@ -31,10 +31,7 @@ static void	taking_forks(t_philo *philo, t_program *program,
 
 static void	announce_fork_taken(t_philo *philo, t_program *program)
 {
-	pthread_mutex_lock(program->print_mutex);
-	printf("%lld %d has taken a fork\n",
-		current_time_ms() - program->start_time, philo->id);
-	pthread_mutex_unlock(program->print_mutex);
+	safe_print(program, philo->id, "has taken a fork");
 }
 
 static void	eating(t_philo *philo, t_program *program)
@@ -49,10 +46,7 @@ static void	eating(t_philo *philo, t_program *program)
 	pthread_mutex_lock(&philo->meal_mutex);
 	philo->last_meal_time = current_time_ms();
 	pthread_mutex_unlock(&philo->meal_mutex);
-	pthread_mutex_lock(program->print_mutex);
-	printf("%lld %d is eating\n",
-		current_time_ms() - program->start_time, philo->id);
-	pthread_mutex_unlock(program->print_mutex);
+	safe_print(program, philo->id, "is eating");
 	sleep_ms(program, program->time_to_eat);
 	pthread_mutex_lock(&philo->meal_mutex);
 	philo->times_eaten += 1;
@@ -68,6 +62,7 @@ int	eating_routine(t_philo *philo, t_program *program,
 	announce_fork_taken(philo, program);
 	announce_fork_taken(philo, program);
 	eating(philo, program);
+	pthread_mutex_lock(&philo->meal_mutex);
 	times_eaten = philo->times_eaten;
 	pthread_mutex_unlock(&philo->meal_mutex);
 	pthread_mutex_unlock(&program->forks[*right_fork]);
